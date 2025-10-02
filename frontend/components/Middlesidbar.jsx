@@ -37,7 +37,7 @@ const Middlesidebar = () => {
   const [clicked, setclicked] = useState(false);
   const [sendmessage, setsendmessage] = useState("");
   const [image, setimage] = useState(null);
-  const endpoint = "http://localhost:3000";
+  const endpoint = "https://quickchat-vykk.onrender.com";
   const [loading, setloading] = useState(false);
   const socketRef = useRef();
   const [previewSrc, setpreviewsrc] = useState();
@@ -108,7 +108,7 @@ const Middlesidebar = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:3000/postnewmessage",
+        "https://quickchat-vykk.onrender.com/postnewmessage",
         data,
         {
           headers: {
@@ -167,7 +167,7 @@ const Middlesidebar = () => {
   useEffect(() => {
     async function fetchid() {
       try {
-        const response = await axios.get("http://localhost:3000/getid", {
+        const response = await axios.get("https://quickchat-vykk.onrender.com/getid", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -188,7 +188,7 @@ const Middlesidebar = () => {
         setloading(true);
         if (setsendmessage) {
           const response = await axios.get(
-            "http://localhost:3000/getmessages",
+            "https://quickchat-vykk.onrender.com/getmessages",
             {
               headers: {
                 Authorization: `Bearer ${token}`,

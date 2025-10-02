@@ -16,7 +16,7 @@ const Profile = () => {
     async function fetchdetails() {
       try {
         const response = await axios.get(
-          "http://localhost:3000/getuserdetails",
+          "https://quickchat-vykk.onrender.com/getuserdetails",
           {
             headers: {
               "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const Profile = () => {
       const data = { profilepic: imageUrl, name, bio };
 
       const response = await axios.patch(
-        "http://localhost:3000/update-profile",
+        "https://quickchat-vykk.onrender.com/update-profile",
         data,
         {
           headers: {

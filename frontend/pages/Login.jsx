@@ -28,7 +28,7 @@ const Login = () => {
   const handlesubmit = async (e) => {
     e.preventDefault();
 
-    const url = `http://localhost:3000/${islogin ? "login" : "signin"}`;
+    const url = `https://quickchat-vykk.onrender.com/${islogin ? "login" : "signin"}`;
     const payload = {
       email: data.email,
       password: data.password,

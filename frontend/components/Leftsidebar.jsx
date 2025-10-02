@@ -25,7 +25,7 @@ const Leftsidebar = () => {
   const token = sessionStorage.getItem("auth-token");
   const socketRef = useRef();
   const [onlineusers, setonlineusers] = useState({});
-  const endpoint = "http://localhost:3000";
+  const endpoint = "https://quickchat-vykk.onrender.com";
   const [searchquery,setsearchquery] = useState("")
   const [search,setsearch] = useState("")
 
@@ -61,7 +61,7 @@ const Leftsidebar = () => {
   
   useEffect(() => {
     async function fetchUsers() {
-      const response = await axios.get("http://localhost:3000/getallusers", {
+      const response = await axios.get("https://quickchat-vykk.onrender.com/getallusers", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
