@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Authcontext } from "../context/Authcontext";
 import io from "socket.io-client";
-
-const endpoint = "http://localhost:3000";
+import close_icon from "../Assets/close_icon.png"
 
 const Leftsidebar = () => {
   const {
@@ -18,8 +17,6 @@ const Leftsidebar = () => {
     id,
     setsocket,
     setistyping,
-    messages,
-    setmessages,
     notifications,
     setnotifications,
   } = useContext(Authcontext);
@@ -29,11 +26,18 @@ const Leftsidebar = () => {
   const socketRef = useRef();
   const [onlineusers, setonlineusers] = useState({});
   const endpoint = "http://localhost:3000";
+  const [searchquery,setsearchquery] = useState("")
+  const [search,setsearch] = useState("")
 
   const logout = () => {
     sessionStorage.removeItem("auth-token");
     window.location.reload();
   };
+
+  const searchresults= async(e)=>{
+    setsearchquery(e.target.value.toLowerCase())
+  }
+
   useEffect(() => {
     socketRef.current = io(endpoint);
     socketRef.current.emit("setup", { _id: id });
@@ -118,11 +122,18 @@ const Leftsidebar = () => {
           type="text"
           className="ml-1 w-[100%] outline-none"
           placeholder="Search a chat"
+          value={searchquery}
+          onChange={(e)=>{searchresults(e)}}
         />
+        {
+          searchquery && <img src={close_icon} className="w-6 h-5 mt-0.5 mx-2 cursor-pointer rounded-2xl" onClick={()=>setsearchquery("")} alt="" />
+        }
+        
       </div>
 
-      <div className="flex flex-col ite mt-6">
+      <div className="flex flex-col mt-6">
         {users
+          .filter(user=> user.name.toLowerCase().includes(searchquery))
           .slice()
           .sort((a, b) => {
             const aonline = onlineusers[a._id] ? 1 : 0;
