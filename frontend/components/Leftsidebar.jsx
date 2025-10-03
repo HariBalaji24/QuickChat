@@ -30,7 +30,7 @@ const Leftsidebar = () => {
   const [search,setsearch] = useState("")
 
   const logout = () => {
-    sessionStorage.removeItem("auth-token");
+    localStorage.removeItem("auth-token");
     window.location.reload();
   };
 

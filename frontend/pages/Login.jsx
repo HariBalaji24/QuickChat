@@ -43,7 +43,7 @@ const Login = () => {
       const resData = response.data;
 
       if ( resData.token) {
-        sessionStorage.setItem("auth-token", resData.token);
+        localStorage.setItem("auth-token", resData.token);
         toast.success(`${state} successful`)
         navigate("/");
         window.location.reload();

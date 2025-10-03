@@ -30,10 +30,10 @@ const Middlesidebar = () => {
     id,
     setid,
     setsocket,
+    token
   } = useContext(Authcontext);
 
   const scrollEnd = useRef();
-  const token = sessionStorage.getItem("auth-token");
   const [clicked, setclicked] = useState(false);
   const [sendmessage, setsendmessage] = useState("");
   const [image, setimage] = useState(null);

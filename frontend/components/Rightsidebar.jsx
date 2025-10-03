@@ -6,7 +6,6 @@ import axios from "axios";
 const Rightsidebar = () => {
   const { selecteduser, id, setShowProfile, messages, setmessages } =
     useContext(Authcontext);
-  const token = sessionStorage.getItem("auth-token");
 
   const toggleProfile = () => {
     setShowProfile((prev) => !prev);

@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [typing, settyping] = useState(false);
   const [istyping, setistyping] = useState(false);
   const [id, setid] = useState();
+  const token=localStorage.getItem("auth-token")
   const value = {
     users,
     setUsers,
@@ -37,8 +38,8 @@ export const AuthProvider = ({ children }) => {
     id,
     setid,
     notifications,
-    setnotifications
-
+    setnotifications,
+    token
   };
   return <Authcontext.Provider value={value}>{children}</Authcontext.Provider>;
 };
