@@ -6,7 +6,7 @@ const { protectroute } = require("../middleware/auth")
 const userrouter = express.Router()
 
 userrouter.route("/getuserdetails").get(usercontroller.getuserdetails)
-userrouter.route("/signin").post(usercontroller.signup)
+userrouter.route("/signup").post(usercontroller.signup)
 userrouter.route("/login").post(usercontroller.login)
 userrouter.route("/update-profile").patch(protectroute,usercontroller.updateprofile )
 

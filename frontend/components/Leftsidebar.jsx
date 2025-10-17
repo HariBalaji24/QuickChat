@@ -77,7 +77,6 @@ const Leftsidebar = () => {
       setnotifications([]);
     }
   }, [notifications, selecteduser]);
-console.log(onlineusers)
   return (
     <div className="px-4 border-r-4 h-screen">
       <div className="flex justify-between items-center mt-3">

@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [istyping, setistyping] = useState(false);
   const [id, setid] = useState();
   const token=localStorage.getItem("auth-token")
-  const endpoint = "http://localhost:3000"
+  const endpoint = "https://quickchat-1-y21x.onrender.com"
   const value = {
     users,
     setUsers,

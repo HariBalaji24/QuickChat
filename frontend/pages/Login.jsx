@@ -2,23 +2,25 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import image_icon from "../Assets/logo_icon.svg";
 import axios from "axios";
-import toast from "react-hot-toast"
+import toast from "react-hot-toast";
+import { Authcontext } from "../context/Authcontext";
 
 const Login = () => {
+  const { endpoint } = useContext(Authcontext);
   const [data, setdata] = useState({ name: "", email: "", password: "" });
   const [islogin, setislogin] = useState(false);
-  const [state,setstate] = useState("Sign Up")
+  const [state, setstate] = useState("Sign Up");
   const navigate = useNavigate();
 
   const togglestate = () => {
+    0;
     setislogin(!islogin);
     if (!islogin) {
-      setstate("Login In")
+      setstate("Login In");
+    } else {
+      setstate("Sign Up");
     }
-    else{
-      setstate("Sign Up")
-    }
-    setdata({ name: "", email: "", password: "" }); 
+    setdata({ name: "", email: "", password: "" });
   };
 
   const handlechange = (e) => {
@@ -28,7 +30,7 @@ const Login = () => {
   const handlesubmit = async (e) => {
     e.preventDefault();
 
-    const url = `https://quickchat-vykk.onrender.com/${islogin ? "login" : "signin"}`;
+    const url = `${endpoint}/${islogin ? "login" : "signup"}`;
     const payload = {
       email: data.email,
       password: data.password,
@@ -37,21 +39,21 @@ const Login = () => {
 
     try {
       const response = await axios.post(url, payload, {
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
       });
 
       const resData = response.data;
 
-      if ( resData.token) {
+      if (resData.token) {
         localStorage.setItem("auth-token", resData.token);
-        toast.success(`${state} successful`)
+        toast.success(`${state} successful`);
         navigate("/");
         window.location.reload();
       } else {
         toast.error(`${state} failed`);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
 

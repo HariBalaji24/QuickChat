@@ -108,7 +108,7 @@ const Middlesidebar = () => {
       }
 
       const response = await axios.post(
-        "https://quickchat-vykk.onrender.com/postnewmessage",
+        `${endpoint}/postnewmessage`,
         data,
         {
           headers: {
@@ -167,7 +167,7 @@ const Middlesidebar = () => {
   useEffect(() => {
     async function fetchid() {
       try {
-        const response = await axios.get("https://quickchat-vykk.onrender.com/getid", {
+        const response = await axios.get(`${endpoint}/getid`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -188,7 +188,7 @@ const Middlesidebar = () => {
         setloading(true);
         if (setsendmessage) {
           const response = await axios.get(
-            "https://quickchat-vykk.onrender.com/getmessages",
+            `${endpoint}/getmessages`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,

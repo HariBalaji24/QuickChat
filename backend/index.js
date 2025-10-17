@@ -20,10 +20,15 @@ app.use(cors({
 
 //initialize socket.io
 export const io = new Server(server, {
-  cors: { origin: "http://localhost:5173",
-  origin:"https://quick-chat-lemon.vercel.app", // frontend origin
-  credentials: true, },
+  cors: {
+    origin: [
+      "http://localhost:5173",
+      "https://quick-chat-lemon.vercel.app"
+    ],
+    credentials: true,
+  },
 });
+
 
 const onlineusers = {};
 
@@ -64,4 +69,4 @@ app.use("/", userrouter);
 app.use((req, res, next) => {
   res.status(404).json({ message: `cant find ${req.originalUrl}` });
 });
-server.listen(3000, () => {console.log(`✅ Server running on port`);});
+server.listen(process.env.PORT, () => {console.log(`✅ Server running on port ${process.env.PORT}`);});
