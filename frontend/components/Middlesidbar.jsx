@@ -30,14 +30,14 @@ const Middlesidebar = () => {
     id,
     setid,
     setsocket,
-    token
+    token,
+    endpoint
   } = useContext(Authcontext);
 
   const scrollEnd = useRef();
   const [clicked, setclicked] = useState(false);
   const [sendmessage, setsendmessage] = useState("");
   const [image, setimage] = useState(null);
-  const endpoint = "https://quickchat-vykk.onrender.com";
   const [loading, setloading] = useState(false);
   const socketRef = useRef();
   const [previewSrc, setpreviewsrc] = useState();

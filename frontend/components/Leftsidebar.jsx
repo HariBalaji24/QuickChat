@@ -5,29 +5,25 @@ import axios from "axios";
 import { Authcontext } from "../context/Authcontext";
 import io from "socket.io-client";
 import close_icon from "../Assets/close_icon.png"
-
 const Leftsidebar = () => {
   const {
     users,
     setUsers,
     setSelectedUser,
     selecteduser,
-    istyping,
-    typing,
     id,
     setsocket,
     setistyping,
     notifications,
     setnotifications,
+    token,
+    endpoint
   } = useContext(Authcontext);
 
   const [state, setState] = useState(false);
-  const token = sessionStorage.getItem("auth-token");
   const socketRef = useRef();
   const [onlineusers, setonlineusers] = useState({});
-  const endpoint = "https://quickchat-vykk.onrender.com";
   const [searchquery,setsearchquery] = useState("")
-  const [search,setsearch] = useState("")
 
   const logout = () => {
     localStorage.removeItem("auth-token");
@@ -61,7 +57,7 @@ const Leftsidebar = () => {
   
   useEffect(() => {
     async function fetchUsers() {
-      const response = await axios.get("https://quickchat-vykk.onrender.com/getallusers", {
+      const response = await axios.get(`${endpoint}/getallusers`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -81,7 +77,7 @@ const Leftsidebar = () => {
       setnotifications([]);
     }
   }, [notifications, selecteduser]);
-
+console.log(onlineusers)
   return (
     <div className="px-4 border-r-4 h-screen">
       <div className="flex justify-between items-center mt-3">
