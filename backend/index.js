@@ -12,7 +12,9 @@ app.use(cors());
 
 //initialize socket.io
 export const io = new Server(server, {
-  cors: { origin: "*" },
+  cors: { origin: "http://localhost:5173",
+  origin:"https://https://quick-chat-lemon.vercel.app", // frontend origin
+  credentials: true, },
 });
 
 const onlineusers = {};
