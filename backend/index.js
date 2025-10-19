@@ -12,7 +12,7 @@ const server = http.createServer(app);
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://quick-chat-lemon.vercel.app"
+    "https://quick-chat-eight-green.vercel.app/"
   ],
   credentials: true,
 }));
@@ -23,7 +23,7 @@ export const io = new Server(server, {
   cors: {
     origin: [
       "http://localhost:5173",
-      "https://quick-chat-lemon.vercel.app"
+      "https://quick-chat-eight-green.vercel.app/"
     ],
     credentials: true,
   },
