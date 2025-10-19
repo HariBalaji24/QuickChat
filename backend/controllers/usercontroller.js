@@ -18,7 +18,8 @@ exports.signup = async (req, res) => {
       password: hashedPassword,
       bio,
     });
-    const token = jwt.sign({ id: user._id }, secretkey, { expiresIn: "30d" });
+    const token = jwt.sign({ id: newUser._id }, secretkey, { expiresIn: "30d" });
+
 
     res
       .status(201)
@@ -29,6 +30,7 @@ exports.signup = async (req, res) => {
     res.status(400).json({ message: "Signup failed", error: error.message });
   }
 };
+
 
 exports.login = async (req, res) => {
   try {

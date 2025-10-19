@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Authcontext } from "../context/Authcontext";
 import io from "socket.io-client";
-import close_icon from "../Assets/close_icon.png"
+import close_icon from "../Assets/close_icon.png";
 const Leftsidebar = () => {
   const {
     users,
@@ -17,22 +17,22 @@ const Leftsidebar = () => {
     notifications,
     setnotifications,
     token,
-    endpoint
+    endpoint,
   } = useContext(Authcontext);
 
   const [state, setState] = useState(false);
   const socketRef = useRef();
   const [onlineusers, setonlineusers] = useState({});
-  const [searchquery,setsearchquery] = useState("")
+  const [searchquery, setsearchquery] = useState("");
 
   const logout = () => {
     localStorage.removeItem("auth-token");
     window.location.reload();
   };
 
-  const searchresults= async(e)=>{
-    setsearchquery(e.target.value.toLowerCase())
-  }
+  const searchresults = async (e) => {
+    setsearchquery(e.target.value.toLowerCase());
+  };
 
   useEffect(() => {
     socketRef.current = io(endpoint);
@@ -54,7 +54,7 @@ const Leftsidebar = () => {
       socketRef.current.disconnect();
     };
   }, [id, setsocket]);
-  
+
   useEffect(() => {
     async function fetchUsers() {
       const response = await axios.get(`${endpoint}/getallusers`, {
@@ -111,67 +111,74 @@ const Leftsidebar = () => {
       </div>
 
       {/* Search */}
-      <div className="flex p-2 mt-7 rounded-[50px] bg-gray-500 text-[15px] ">
+      <div className="flex p-2 mt-7 rounded-[50px] bg-gray-500 text-[15px]  overflow-y-auto h-max ">
         <img src={assests.search_icon} className="w-6 mx-2" alt="" />
         <input
           type="text"
           className="ml-1 w-[100%] outline-none"
           placeholder="Search a chat"
           value={searchquery}
-          onChange={(e)=>{searchresults(e)}}
+          onChange={(e) => {
+            searchresults(e);
+          }}
         />
-        {
-          searchquery && <img src={close_icon} className="w-6 h-5 mt-0.5 mx-2 cursor-pointer rounded-2xl" onClick={()=>setsearchquery("")} alt="" />
-        }
-        
+        {searchquery && (
+          <img
+            src={close_icon}
+            className="w-6 h-5 mt-0.5 mx-2 cursor-pointer rounded-2xl"
+            onClick={() => setsearchquery("")}
+            alt=""
+          />
+        )}
       </div>
-
-      <div className="flex flex-col mt-6">
-        {users
-          .filter(user=> user.name.toLowerCase().includes(searchquery))
-          .slice()
-          .sort((a, b) => {
-            const aonline = onlineusers[a._id] ? 1 : 0;
-            const bonline = onlineusers[b._id] ? 1 : 0;
-            return bonline - aonline;
-          })
-          .map((user, index) => {
-            const userNotifications = notifications.filter(
-              (n) => n.senderId === user._id
-            );
-            const isonline = onlineusers[user._id] ? (
-              <span className="text-green-500 text-[12px]">Online</span>
-            ) : (
-              <span className=" text-[12px]">Offline</span>
-            );
-            return (
-              <div
-                key={index}
-                onClick={() => {
-                  setSelectedUser(user);
-                  setnotifications([]);
-                }}
-                className="flex items-center text-white cursor-pointer py-2 pl-2 rounded-[10px] hover:bg-gray-500"
-              >
-                <img
-                  src={user.profilepic || assests.avatar_icon}
-                  className="h-13 w-13 rounded-full"
-                  alt=""
-                />
-                <div className="flex justify-between items-center w-full">
-                  <div className="flex flex-col justify-between ml-3">
-                    <p>{user.name}</p>
-                    <span className="text-[12px]">{isonline}</span>
+      <div className="px-4 h-[80%] flex flex-col">
+        <div className="flex-1 overflow-y-auto mt-6">
+          {users
+            .filter((user) => user.name.toLowerCase().includes(searchquery))
+            .slice()
+            .sort((a, b) => {
+              const aonline = onlineusers[a._id] ? 1 : 0;
+              const bonline = onlineusers[b._id] ? 1 : 0;
+              return bonline - aonline;
+            })
+            .map((user, index) => {
+              const userNotifications = notifications.filter(
+                (n) => n.senderId === user._id
+              );
+              const isonline = onlineusers[user._id] ? (
+                <span className="text-green-500 text-[12px]">Online</span>
+              ) : (
+                <span className=" text-[12px]">Offline</span>
+              );
+              return (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setSelectedUser(user);
+                    setnotifications([]);
+                  }}
+                  className="flex items-center text-white cursor-pointer py-2 pl-2 rounded-[10px] hover:bg-gray-500"
+                >
+                  <img
+                    src={user.profilepic || assests.avatar_icon}
+                    className="h-13 w-13 rounded-full"
+                    alt=""
+                  />
+                  <div className="flex justify-between items-center w-full">
+                    <div className="flex flex-col justify-between ml-3">
+                      <p>{user.name}</p>
+                      <span className="text-[12px]">{isonline}</span>
+                    </div>
+                    {userNotifications.length > 0 && (
+                      <p className="bg-green-400 font-bold text-sm rounded-full px-[6px] mr-3">
+                        {userNotifications.length}
+                      </p>
+                    )}
                   </div>
-                  {userNotifications.length > 0 && (
-                    <p className="bg-green-400 font-bold text-sm rounded-full px-[6px] mr-3">
-                      {userNotifications.length}
-                    </p>
-                  )}
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+        </div>
       </div>
     </div>
   );
